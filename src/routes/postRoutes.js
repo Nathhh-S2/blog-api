@@ -2,6 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
+const autenticar = require("../middlewares/authMiddleware");
+
 const { 
     listarPosts,
     criarPost,
@@ -14,15 +16,10 @@ const {
 console.log("ROTAS CARREGADAS");
 
 router.get("/posts", listarPosts);
-
-router.get("/posts/search", buscarPorTermo);
-
-router.post("/posts", criarPost);
-
 router.get("/posts/:id", buscarPost);
 
-router.put("/posts/:id", atualizarPost);
-
-router.delete("/posts/:id", deletarPost);
+router.post("/posts", autenticar, criarPost);
+router.put("/posts/:id", autenticar, atualizarPost);
+router.delete("/posts/:id", autenticar, deletarPost);
 
 module.exports = router;
