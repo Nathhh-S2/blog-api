@@ -1,306 +1,130 @@
-# 📚 Blog API - Tech Challenge FIAP
+# 📚 Blog Escolar - Back-end
 
 ## 📌 Sobre o projeto
 
-Este projeto foi desenvolvido como parte do **Tech Challenge da FIAP**, no curso de **Full Stack Development**.
+Projeto desenvolvido para o **Tech Challenge da FIAP - Full Stack Development**.
 
-O desafio consiste na criação de uma aplicação de blogging para auxiliar professores e professoras da rede pública de educação a compartilharem aulas e conteúdos de forma prática, centralizada e tecnológica.
+O back-end fornece uma API REST para gerenciamento das publicações do Blog Escolar.
 
-A aplicação foi refatorada utilizando **Node.js** no back-end, com persistência de dados em banco **MongoDB**, disponibilizando uma API REST completa para gerenciamento de postagens.
+A aplicação foi desenvolvida utilizando **Node.js**, **Express** e **MongoDB**.
 
----
-
-# 🚀 Tecnologias utilizadas
-
-## Back-end
+## 🚀 Tecnologias
 
 - Node.js
-- Express.js
+- Express
+- MongoDB
 - Mongoose
-
-## Banco de dados
-
-- MongoDB Atlas
-
-## Testes
-
+- JWT
+- bcryptjs
 - Jest
 - Supertest
-
-## DevOps
-
 - Docker
 - GitHub Actions
 
----
+## ✨ Funcionalidades
 
-# 🏗️ Arquitetura da aplicação
+### Posts
 
-A aplicação foi organizada utilizando separação de responsabilidades:
+- Listar posts
+- Buscar um post
+- Criar post
+- Editar post
+- Excluir post
+- Pesquisar posts
 
-```
-blog-api
-│
-├── src
-│   │
-│   ├── config
-│   │   └── database.js
-│   │
-│   ├── controllers
-│   │   └── postController.js
-│   │
-│   ├── models
-│   │   └── Post.js
-│   │
-│   ├── routes
-│   │   └── postRoutes.js
-│   │
-│   ├── app.js
-│   └── server.js
-│
-├── tests
-│   └── post.test.js
-│
-├── Dockerfile
-├── package.json
-└── README.md
-```
+### Autenticação
 
-### Camadas da aplicação
+- Cadastro de professor
+- Login
+- Autenticação com JWT
+- Proteção das operações administrativas
 
-**Routes**
-- Responsáveis pela definição dos endpoints da API.
+## 🔗 Principais endpoints
 
-**Controllers**
-- Contêm as regras de negócio e processamento das requisições.
+| Método | Rota | Função |
+|---|---|---|
+| GET | /posts | Listar posts |
+| GET | /posts/:id | Buscar post |
+| POST | /posts | Criar post |
+| PUT | /posts/:id | Editar post |
+| DELETE | /posts/:id | Excluir post |
+| POST | /auth/cadastro | Cadastrar professor |
+| POST | /auth/login | Fazer login |
 
-**Models**
-- Definem a estrutura dos dados armazenados no MongoDB.
+As operações de criação, edição e exclusão de posts exigem autenticação.
 
-**Config**
-- Responsável pela configuração da conexão com o banco de dados.
+## 🗂️ Estrutura
 
----
+blog-api/
 
-# ⚙️ Funcionalidades da API
+- src/
+  - config/
+  - controllers/
+  - middlewares/
+  - models/
+  - routes/
+  - app.js
+  - server.js
+- tests/
+- Dockerfile
+- package.json
+- README.md
 
-A aplicação permite o gerenciamento completo de posts.
+## 🔐 Variáveis de ambiente
 
-## 📄 Listar todas as postagens
-
-### GET `/posts`
-
-Retorna todos os posts cadastrados.
-
----
-
-## 🔎 Buscar postagem por ID
-
-### GET `/posts/:id`
-
-Retorna uma postagem específica através do seu identificador.
-
----
-
-## ✏️ Criar uma postagem
-
-### POST `/posts`
-
-Permite que professores criem novas postagens.
-
-Exemplo de requisição:
-
-```json
-{
-  "titulo": "Aula de Node.js",
-  "conteudo": "Aprendendo criação de APIs REST",
-  "autor": "Natália"
-}
-```
-
----
-
-## 📝 Atualizar uma postagem
-
-### PUT `/posts/:id`
-
-Permite editar uma postagem existente.
-
----
-
-## 🗑️ Excluir uma postagem
-
-### DELETE `/posts/:id`
-
-Remove uma postagem utilizando seu ID.
-
----
-
-## 🔍 Buscar posts por palavra-chave
-
-### GET `/posts/search?termo=node`
-
-Permite buscar conteúdos pelo título ou texto da postagem.
+O projeto utiliza um arquivo `.env` para armazenar configurações privadas.
 
 Exemplo:
 
-```
-GET /posts/search?termo=node
-```
+MONGODB_URI=sua_url_do_mongodb
 
----
+JWT_SECRET=sua_chave_secreta
 
-# 🔐 Configuração do ambiente
+O arquivo `.env` não deve ser enviado para o GitHub.
 
-Crie um arquivo chamado:
+## ▶️ Executar localmente
 
-```
-.env
-```
+Instalar as dependências:
 
-Na raiz do projeto.
-
-Adicione sua conexão com o MongoDB:
-
-```env
-MONGO_URI=sua_string_de_conexao_mongodb
-```
-
----
-
-# 💻 Como executar o projeto localmente
-
-## 1. Clonar o repositório
-
-```bash
-git clone https://github.com/Nathhh-S2/blog-api.git
-```
-
-## 2. Entrar na pasta do projeto
-
-```bash
-cd blog-api
-```
-
-## 3. Instalar dependências
-
-```bash
 npm install
-```
 
-## 4. Executar a aplicação
+Iniciar o servidor:
 
-```bash
 node src/server.js
-```
 
-A API estará disponível em:
+A API ficará disponível em:
 
-```
 http://localhost:3000
-```
 
----
+## 🧪 Testes
 
-# 🐳 Executando com Docker
+Para executar os testes:
 
-## Criar a imagem
-
-```bash
-docker build -t blog-api .
-```
-
-## Executar o container
-
-```bash
-docker run -p 3000:3000 blog-api
-```
-
-A aplicação ficará disponível em:
-
-```
-http://localhost:3000
-```
-
----
-
-# 🧪 Testes automatizados
-
-O projeto possui testes automatizados utilizando Jest e Supertest.
-
-Executar testes:
-
-```bash
 npm test
-```
 
-Executar testes com relatório de cobertura:
+## 🐳 Docker
 
-```bash
-npm test -- --coverage
-```
+Para criar a imagem:
 
-## Cobertura de testes
+docker build -t blog-api .
 
-A aplicação possui cobertura superior ao requisito mínimo solicitado:
+Para executar:
 
-```
-Cobertura atual: 66%
-```
+docker run --env-file .env -p 3000:3000 blog-api
 
-Foram testados endpoints como:
+## 🔗 Repositórios
 
-- GET /posts
-- POST /posts
-- GET /posts/:id
-- DELETE /posts/:id
+**Back-end:**
 
----
+https://github.com/Nathhh-S2/blog-api
 
-# 🔄 Integração Contínua (CI/CD)
+**Front-end:**
 
-O projeto utiliza **GitHub Actions** para automatizar processos de validação.
+https://github.com/Nathhh-S2/blog-frontend
 
-A cada atualização enviada para a branch principal:
-
-- O código é baixado;
-- O ambiente Node.js é configurado;
-- As dependências são instaladas;
-- Os testes automatizados são executados.
-
-O pipeline garante maior segurança e qualidade nas alterações realizadas.
-
----
-
-# 🧩 Desafios encontrados
-
-Durante o desenvolvimento do projeto, alguns desafios foram enfrentados:
-
-- Configuração da conexão com MongoDB Atlas;
-- Organização da arquitetura da API;
-- Implementação do CRUD completo;
-- Criação dos testes automatizados;
-- Configuração do ambiente Docker;
-- Implementação do workflow de integração contínua com GitHub Actions.
-
----
-
-# 🎯 Objetivos alcançados
-
-Com este projeto foi possível aplicar conhecimentos de:
-
-- Desenvolvimento de APIs REST;
-- Node.js e Express;
-- Banco de dados NoSQL;
-- Arquitetura de aplicações backend;
-- Testes automatizados;
-- Containerização com Docker;
-- Automação de processos com CI/CD.
-
----
-
-# 👩‍💻 Autora
+## 👩‍💻 Autoria
 
 **Natália**
 
-Projeto desenvolvido para o **Tech Challenge FIAP - Full Stack Development**.
+Tech Challenge — FIAP  
+Full Stack Development
