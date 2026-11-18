@@ -1,10 +1,11 @@
-const express = require("express");
 
+const express = require("express");
 const router = express.Router();
 
 const autenticar = require("../middlewares/authMiddleware");
+const verificarProfessor = require("../middlewares/professorMiddleware");
 
-const { 
+const {
     listarPosts,
     criarPost,
     buscarPost,
@@ -15,11 +16,14 @@ const {
 
 console.log("ROTAS CARREGADAS");
 
+// LISTAGEM E BUSCA
 router.get("/posts", listarPosts);
+router.get("/posts/buscar", buscarPorTermo);
 router.get("/posts/:id", buscarPost);
 
-router.post("/posts", autenticar, criarPost);
-router.put("/posts/:id", autenticar, atualizarPost);
-router.delete("/posts/:id", autenticar, deletarPost);
+// SOMENTE PROFESSORES
+router.post("/posts", autenticar, verificarProfessor, criarPost);
+router.put("/posts/:id", autenticar, verificarProfessor, atualizarPost);
+router.delete("/posts/:id", autenticar, verificarProfessor, deletarPost);
 
 module.exports = router;

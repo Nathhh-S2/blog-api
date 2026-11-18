@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
@@ -18,15 +19,10 @@ function autenticar(req, res, next) {
     try {
         const usuario = jwt.verify(token, SECRET_KEY);
 
-        if (usuario.tipo !== "professor") {
-            return res.status(403).json({
-                mensagem: "Acesso permitido apenas para professores"
-            });
-        }
-
         req.usuario = usuario;
 
         next();
+
     } catch (erro) {
         return res.status(401).json({
             mensagem: "Token inválido ou expirado"
